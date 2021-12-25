@@ -73,24 +73,24 @@ T* TreeList<T>::remove(unsigned int i) {
             TLNode<T>* inode;
             if(node == root) {
                 if(node->leftDepth() >= node->rightDepth()) {
-                    root = node->left;
-                    inode = node->right;
+                    root = node->left();
+                    inode = node->right();
                 } else {
-                    root = node->right;
-                    inode = node->left;
+                    root = node->right();
+                    inode = node->left();
                 }
                 root->parent = nullptr;
                 rnode = root;
             } else {
                 TLNode<T>* pnode = node->parent;
-                if(node == pnode->left) {
-                    pnode->left = node->left;
-                    rnode = node->left;
-                    inode = node->right;
+                if(node == pnode->left()) {
+                    pnode->left(node->left());
+                    rnode = node->left();
+                    inode = node->right();
                 } else {
-                    pnode->right = node->right;
-                    rnode = node->right;
-                    inode = node->left;
+                    pnode->right(node->right());
+                    rnode = node->right();
+                    inode = node->left();
                 }
             }
             if(inode != nullptr) {
@@ -109,10 +109,10 @@ TLNode<T>* TreeList<T>::findNode(unsigned int i, TLNode<T>* curnode) {
     TLNode<T>* node = nullptr;
     if(curnode->i == i) {
         node = curnode;
-    } else if(curnode->i > i && curnode->left != nullptr) {
-        node = findNode(i, curnode->left);
-    } else if(curnode->right != nullptr) {
-        node = findNode(i, curnode->right);
+    } else if(curnode->i > i && curnode->left() != nullptr) {
+        node = findNode(i, curnode->left());
+    } else if(curnode->right() != nullptr) {
+        node = findNode(i, curnode->right());
     }
     return node;
 }
@@ -127,19 +127,19 @@ void TreeList<T>::insert(TLNode<T>* inode, TLNode<T>* curnode) {
     if(curnode->i == inode->i) {
         curnode->data = inode->data;
     } else if(curnode->i > inode->i) {
-        if(curnode->left == nullptr) {
-            curnode->left = inode;
+        if(curnode->left() == nullptr) {
+            curnode->left(inode);
             inode->parent = curnode;
-            balance(curnode->left);
+            balance(curnode->left());
         } else {
-            insert(inode, curnode->left);
+            insert(inode, curnode->left());
         }
-    } else if(curnode->right == nullptr) {
-        curnode->right = inode;
+    } else if(curnode->right() == nullptr) {
+        curnode->right(inode);
         inode->parent = curnode;
-        balance(curnode->right);
+        balance(curnode->right());
     } else {
-        insert(inode, curnode->right);
+        insert(inode, curnode->right());
     }
 }
 
@@ -159,36 +159,36 @@ void TreeList<T>::balance(TLNode<T>* node) {
 
 template <class T>
 void TreeList<T>::lrotate(TLNode<T>* node) {
-    TLNode<T>* curnode = node->right;
+    TLNode<T>* curnode = node->right();
     curnode->parent = node->parent;
     if(node == root) {
         root = curnode;
     }
-    node->right = nullptr;
-    while(curnode->left != nullptr) {
-        curnode = curnode->left;
+    node->right(nullptr);
+    while(curnode->left() != nullptr) {
+        curnode = curnode->left();
     }   
-    curnode->left = node;
+    curnode->left(node);
     node->parent = curnode;
     balance(node);
 }
 
 template <class T>
 void TreeList<T>::rrotate(TLNode<T>* node) {
-    TLNode<T>* curnode = node->left;
+    TLNode<T>* curnode = node->left();
     curnode->parent = node->parent;
     if(node == root) {
         root = curnode;
     }
-    node->left = nullptr;
-    if(curnode->right == nullptr) {
-        curnode->right = node;
+    node->left(nullptr);
+    if(curnode->right() == nullptr) {
+        curnode->right(node);
     } else {
-        curnode = curnode->right;
-        while(curnode->left != nullptr) {
-            curnode = curnode->left;
+        curnode = curnode->right();
+        while(curnode->left() != nullptr) {
+            curnode = curnode->left();
         }
-        curnode->left = node;
+        curnode->left(node);
     }
     node->parent = curnode;
     balance(node);

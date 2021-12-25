@@ -75,13 +75,13 @@ TEST(TreeListTest, SetTwoIntIncStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    EXPECT_EQ(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->right;
+    EXPECT_EQ(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->right();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    ASSERT_EQ(node->left, nullptr);
-    ASSERT_EQ(node->right, nullptr);
+    ASSERT_EQ(node->left(), nullptr);
+    ASSERT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, SetTwoIntDecStructure) {
@@ -92,13 +92,13 @@ TEST(TreeListTest, SetTwoIntDecStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    ASSERT_NE(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->left;
+    ASSERT_NE(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    ASSERT_EQ(node->left, nullptr);
-    ASSERT_EQ(node->right, nullptr);
+    ASSERT_EQ(node->left(), nullptr);
+    ASSERT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, SetThreeIntIncStructure) {
@@ -110,18 +110,18 @@ TEST(TreeListTest, SetThreeIntIncStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    EXPECT_NE(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->left;
+    EXPECT_NE(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->parent->right;
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->parent->right();
     ASSERT_EQ(node->i, 2);
     ASSERT_EQ(node->data, exp[2]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, SetThreeIntDecStructure) {
@@ -133,18 +133,18 @@ TEST(TreeListTest, SetThreeIntDecStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    EXPECT_NE(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->left;
+    EXPECT_NE(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->parent->right;
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->parent->right();
     ASSERT_EQ(node->i, 2);
     ASSERT_EQ(node->data, exp[2]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, SetFiveIntIncStructure) {
@@ -156,28 +156,28 @@ TEST(TreeListTest, SetFiveIntIncStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 2);
     ASSERT_EQ(node->data, exp[2]);
-    ASSERT_NE(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->left;
+    ASSERT_NE(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    ASSERT_NE(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->left;
+    ASSERT_NE(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->parent->parent->right;
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->parent->parent->right();
     ASSERT_EQ(node->i, 3);
     ASSERT_EQ(node->data, exp[3]);
-    EXPECT_EQ(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->right;
+    EXPECT_EQ(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->right();
     ASSERT_EQ(node->i, 4);
     ASSERT_EQ(node->data, exp[4]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, SetFiveIntDecStructure) {
@@ -189,28 +189,28 @@ TEST(TreeListTest, SetFiveIntDecStructure) {
     TLNode<int>* node = t.getRoot();
     ASSERT_EQ(node->i, 2);
     ASSERT_EQ(node->data, exp[2]);
-    ASSERT_NE(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->left;
+    ASSERT_NE(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 1);
     ASSERT_EQ(node->data, exp[1]);
-    ASSERT_NE(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->left;
+    ASSERT_NE(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->left();
     ASSERT_EQ(node->i, 0);
     ASSERT_EQ(node->data, exp[0]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
-    node = node->parent->parent->right;
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
+    node = node->parent->parent->right();
     ASSERT_EQ(node->i, 3);
     ASSERT_EQ(node->data, exp[3]);
-    EXPECT_EQ(node->left, nullptr);
-    ASSERT_NE(node->right, nullptr);
-    node = node->right;
+    EXPECT_EQ(node->left(), nullptr);
+    ASSERT_NE(node->right(), nullptr);
+    node = node->right();
     ASSERT_EQ(node->i, 4);
     ASSERT_EQ(node->data, exp[4]);
-    EXPECT_EQ(node->left, nullptr);
-    EXPECT_EQ(node->right, nullptr);
+    EXPECT_EQ(node->left(), nullptr);
+    EXPECT_EQ(node->right(), nullptr);
 }
 
 TEST(TreeListTest, RemoveOneIntLenOne) {
