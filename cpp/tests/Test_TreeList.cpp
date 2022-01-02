@@ -1,4 +1,5 @@
 #include <string>
+#include <set>
 #include <gtest/gtest.h>
 #include "../TreeList.h"
 
@@ -261,5 +262,90 @@ TEST(TreeListTest, RemoveRootIntLenFive) {
         if(i != 2) {
             ASSERT_EQ(*t[i], exp[i]);
         }
+    }
+}
+
+TEST(TreeListTest, RemoveLeafIntLenFive) {
+    TreeList<int> t;
+    int exp[5] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) {
+        t.set(i, exp[i]);
+    }
+    int* rmval = t.remove(4);
+    ASSERT_NE(rmval, nullptr); 
+    ASSERT_EQ(*rmval, exp[4]);
+    ASSERT_EQ(t[4], nullptr);
+    for(int i = 0; i < 4; i++) {
+        ASSERT_EQ(*t[i], exp[i]);
+    }
+}
+
+TEST(TreeListTest, LengthMinMaxEmpty) {
+    TreeList<int> t;
+    ASSERT_EQ(t.length(), 0);
+    ASSERT_EQ(t.max(), -1);
+    ASSERT_EQ(t.min(), -1);
+}
+
+TEST(TreeListTest, LengthMinMaxNoSkip) {
+    TreeList<int> t;
+    int exp[5] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) {
+        t.set(i, exp[i]);
+    }
+    ASSERT_EQ(t.length(), 5);
+    ASSERT_EQ(t.max(), 4);
+    ASSERT_EQ(t.min(), 0);
+}
+
+TEST(TreeListTest, LengthMinMaxSkip) {
+    TreeList<int> t;
+    int exp[5][2] = {{2, 1}, {4, 2}, {6, 3}, {8, 4}, {10, 5}};
+    for(int i = 0; i < 5; i++) {
+        t.set(exp[i][0], exp[i][1]);
+    }
+    ASSERT_EQ(t.length(), 11);
+    ASSERT_EQ(t.max(), 10);
+    ASSERT_EQ(t.min(), 2);
+}
+
+TEST(TreeListTest, ForSkip) {
+    TreeList<int> t;
+    set<int> indices;
+    int exp[5][2] = {{2, 1}, {4, 2}, {6, 3}, {8, 4}, {10, 5}};
+    for(int i = 0; i < 5; i++) {
+        t.set(exp[i][0], exp[i][1]);
+        indices.insert(exp[i][0]);
+    }
+    for(int i = 0; i < t.length(); i++) {
+        if(indices.count(i) > 0) {
+            ASSERT_NE(t[i], nullptr);
+        } else {
+            ASSERT_EQ(t[i], nullptr);
+        }
+    }
+}
+
+TEST(TreeListTest, FiveIntIterator) {
+    TreeList<int> t;
+    int val[5] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) {
+        t.set(i, val[i]);
+    }
+    int exp = 1;
+    for(int val : t) {
+        ASSERT_EQ(val, exp++);
+    }
+}
+
+TEST(TreeListTest, FiveIntIteratorReverse) {
+    TreeList<int> t;
+    int val[5] = {1, 2, 3, 4, 5};
+    for(int i = 0; i < 5; i++) {
+        t.set(i, val[i]);
+    }
+    int exp = 5;
+    for(auto it = t.begin(true), end = t.end(); it != end; ++it) {
+        ASSERT_EQ(*it, exp--);
     }
 }

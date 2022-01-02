@@ -1,50 +1,46 @@
 #pragma once
 
 #include "TLNode.h"
+#include "TreeListIterator.h"
 
 template <class T>
 class TreeList {
-    public:
-        TreeList();
-        ~TreeList();
-        T* operator[] (unsigned int);
-        void set(unsigned int, T&);
-        T* remove(unsigned int);
-    protected:
-        TLNode<T>* root;
-    private:
-        TLNode<T>* findNode(unsigned int, TLNode<T>*);
-        void insert(unsigned int, T&, TLNode<T>*);
-        void insert(TLNode<T>*, TLNode<T>*);
-        void balance(TLNode<T>*);
-        void lrotate(TLNode<T>*);
-        void rrotate(TLNode<T>*);
+public:
+    TreeList();
+    ~TreeList();
+    T* operator[] (unsigned int);
+    int length();
+    int max();
+    int min();
+    T* remove(unsigned int);
+    void set(unsigned int, T&);
+    TreeListIterator<T> begin();
+    TreeListIterator<T> begin(bool);
+    TreeListIterator<T> end();
+protected:
+    TLNode<T>* head;
+    TLNode<T>* root;
+    TLNode<T>* tail;
+private:
+    TLNode<T>* findNode(unsigned int, TLNode<T>*);
+    void insert(unsigned int, T&, TLNode<T>*);
+    void insert(TLNode<T>*, TLNode<T>*);
+    void balance(TLNode<T>*);
+    void lrotate(TLNode<T>*);
+    void rrotate(TLNode<T>*);
+    void updateMinMax(TLNode<T>*);
 };
 
 // The linker complains if I don't define the implementation in this file
  
 template <class T>
-TreeList<T>::TreeList() : root(nullptr) {};
+TreeList<T>::TreeList() : head(nullptr), root(nullptr), tail(nullptr) {};
 
 template <class T>
 TreeList<T>::~TreeList() {
     if(root != nullptr) {
         // Actually I need to walk the tree and remove all references
         delete root;
-    }
-};
-
-template <class T>
-void TreeList<T>::set(unsigned int i, T& data) {
-    if(root == nullptr) {
-        root = new TLNode<T>(i, data);
-    } else {
-        TLNode<T>* curnode = findNode(i, root);
-        if(curnode == nullptr) {
-            insert(i, data, root);
-        } else {
-            curnode->data = data;
-        }
     }
 };
 
@@ -59,6 +55,36 @@ T* TreeList<T>::operator[] (unsigned int i) {
     }
     return data;
 }
+
+template <class T>
+int TreeList<T>::length() {
+    return max() + 1;
+}
+
+template <class T>
+int TreeList<T>::max() {
+    return (tail == nullptr) ? -1 : tail->i;
+}
+
+template <class T>
+int TreeList<T>::min() {
+    return (head == nullptr) ? -1 : head->i;
+}
+
+template <class T>
+void TreeList<T>::set(unsigned int i, T& data) {
+    if(root == nullptr) {
+        root = new TLNode<T>(i, data);
+        updateMinMax(root);
+    } else {
+        TLNode<T>* curnode = findNode(i, root);
+        if(curnode == nullptr) {
+            insert(i, data, root);
+        } else {
+            curnode->data = data;
+        }
+    }
+};
 
 template <class T>
 T* TreeList<T>::remove(unsigned int i) {
@@ -102,6 +128,21 @@ T* TreeList<T>::remove(unsigned int i) {
     return item;
 }
 
+template <typename T>
+TreeListIterator<T> TreeList<T>::begin() {
+    return begin(false);
+}
+
+template <typename T>
+TreeListIterator<T> TreeList<T>::begin(bool reverse) {
+    return TreeListIterator<T>((reverse) ? tail : head, reverse);
+}
+
+template <typename T>
+TreeListIterator<T> TreeList<T>::end() {
+    return TreeListIterator<T>(nullptr);
+}
+
 // Private members
 
 template <class T>
@@ -130,6 +171,7 @@ void TreeList<T>::insert(TLNode<T>* inode, TLNode<T>* curnode) {
         if(curnode->left() == nullptr) {
             curnode->left(inode);
             inode->parent = curnode;
+            updateMinMax(inode);
             balance(curnode->left());
         } else {
             insert(inode, curnode->left());
@@ -137,6 +179,7 @@ void TreeList<T>::insert(TLNode<T>* inode, TLNode<T>* curnode) {
     } else if(curnode->right() == nullptr) {
         curnode->right(inode);
         inode->parent = curnode;
+        updateMinMax(inode);
         balance(curnode->right());
     } else {
         insert(inode, curnode->right());
@@ -192,4 +235,14 @@ void TreeList<T>::rrotate(TLNode<T>* node) {
     }
     node->parent = curnode;
     balance(node);
+}
+
+template <class T>
+void TreeList<T>::updateMinMax(TLNode<T>* node) {
+    if(head == nullptr || node->i < head->i) {
+        head = node;
+    }
+    if(tail == nullptr || node->i > tail->i) {
+        tail = node;
+    }
 }
