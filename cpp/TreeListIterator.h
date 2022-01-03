@@ -57,12 +57,13 @@ T* TreeListIterator<T>::operator->() {
 
 template <typename T>
 bool TreeListIterator<T>::operator==(const TreeListIterator& other) {
-    return curnode == other.curnode;
+    return curnode == other.curnode ||
+           (curnode != nullptr && other.curnode != nullptr && *curnode == *other.curnode);
 };
 
 template <typename T>
 bool TreeListIterator<T>::operator!=(const TreeListIterator& other) {
-    return curnode != other.curnode;
+    return ! (*this == other);
 };
 
 template <typename T>

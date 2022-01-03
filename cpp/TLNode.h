@@ -15,6 +15,8 @@ class TLNode {
         int leftDepth();
         int rightDepth();
         TLNode<T>* grandparent();
+        bool operator==(TLNode);
+        bool operator!=(TLNode);
     private:
         int depth_;
         TLNode<T>* left_;
@@ -74,4 +76,14 @@ template <typename T>
 void TLNode<T>::right(TLNode<T>* node) {
     right_ = node;
     updateDepth();
+}
+
+template <typename T>
+bool TLNode<T>::operator==(TLNode<T> other) {
+    return i == other.i && data == other.data;
+}
+
+template <typename T>
+bool TLNode<T>::operator!=(TLNode<T> other) {
+    return ! (*this == other);
 }
