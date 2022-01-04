@@ -19,17 +19,13 @@ enable_testing()
 add_subdirectory(cpp)
 
 add_executable(Test_TreeList cpp/tests/Test_TreeList.cpp)
-target_link_libraries(Test_TreeList PUBLIC splist_cpplib gtest_main)
+target_link_libraries(Test_TreeList PUBLIC treelist_lib gtest_main)
 target_include_directories(Test_TreeList PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/cpp")
 
 add_executable(Test_TreeListIterator cpp/tests/Test_TreeListIterator.cpp)
-target_link_libraries(Test_TreeListIterator PUBLIC splist_cpplib gtest_main)
+target_link_libraries(Test_TreeListIterator PUBLIC treelist_lib gtest_main)
 target_include_directories(Test_TreeListIterator PUBLIC "${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/cpp")
 
 include(GoogleTest)
 gtest_discover_tests(Test_TreeList)
 gtest_discover_tests(Test_TreeListIterator)
-
-# set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-# set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-# include(CPack)
