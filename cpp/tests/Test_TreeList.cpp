@@ -345,7 +345,7 @@ TEST(TreeListTest, FiveIntIteratorReverse) {
         t.set(i, val[i]);
     }
     int exp = 5;
-    for(auto it = t.begin(true), end = t.end(); it != end; ++it) {
+    for(auto it = t.rbegin(), end = t.rend(); it != end; ++it) {
         ASSERT_EQ(*it, exp--);
     }
 }

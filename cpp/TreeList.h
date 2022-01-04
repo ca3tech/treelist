@@ -15,8 +15,9 @@ public:
     T* remove(unsigned int);
     void set(unsigned int, T&);
     TreeListIterator<T> begin();
-    TreeListIterator<T> begin(bool);
     TreeListIterator<T> end();
+    TreeListIterator<T> rbegin();
+    TreeListIterator<T> rend();
 protected:
     TLNode<T>* head;
     TLNode<T>* root;
@@ -130,16 +131,21 @@ T* TreeList<T>::remove(unsigned int i) {
 
 template <typename T>
 TreeListIterator<T> TreeList<T>::begin() {
-    return begin(false);
-}
-
-template <typename T>
-TreeListIterator<T> TreeList<T>::begin(bool reverse) {
-    return TreeListIterator<T>((reverse) ? tail : head, reverse);
+    return TreeListIterator<T>(head);
 }
 
 template <typename T>
 TreeListIterator<T> TreeList<T>::end() {
+    return TreeListIterator<T>(nullptr);
+}
+
+template <typename T>
+TreeListIterator<T> TreeList<T>::rbegin() {
+    return TreeListIterator<T>(tail, true);
+}
+
+template <typename T>
+TreeListIterator<T> TreeList<T>::rend() {
     return TreeListIterator<T>(nullptr);
 }
 
