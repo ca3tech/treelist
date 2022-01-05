@@ -55,7 +55,7 @@ int TreeList<T>::min()
 
 using namespace std;
 
-// Create the tree object
+// Create the TreeList object
 TreeList<int> tr;
 
 // Add some items
@@ -86,4 +86,14 @@ for(int x : tr) {
 for(auto it = t.rbegin(), end = t.rend(); it != end; ++it) {
   cout << *it << endl;
 }
+```
+
+## Installation
+
+```{bash}
+git clone https://github.com/ca3tech/treelist.git
+cd treelist
+cmake .
+cmake --build .
+cmake --install .
 ```
